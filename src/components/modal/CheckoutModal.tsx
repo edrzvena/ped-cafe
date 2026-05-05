@@ -37,7 +37,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
     setStep(2);
   };
 
-  const handlePaymentSelect = async (method: string) => {
+  const handlePaymentSelect = async (_method: string) => {
     if (!user) {
       alert('You must be logged in to order!');
       return;
@@ -45,7 +45,8 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
 
     setLoading(true);
     try {
-      const orderItems = [...cart, { name: 'Note', description: `Mode: ${orderType} | Location: ${table}`, price: 0, quantity: 1 } as any];
+      // Masukin info meja/take-away ke dalam data pesanan
+      const orderItems = [...cart, { name: 'Note', description: `Mode: ${orderType} | Location: ${table} | Payment: ${_method}`, price: 0, quantity: 1 } as any];
       
       const data = await createOrder(user.id, totalPrice, orderItems);
       if (data && data[0]) {
@@ -82,6 +83,14 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
         onClose={() => orderType === 'dine-in' ? setStep(1) : setStep(0)} 
         onSelectPayment={handlePaymentSelect} 
       />
+      {loading && (
+        <div className="fixed inset-0 z-[110] bg-primary/20 backdrop-blur-sm flex items-center justify-center">
+          <div className="bg-white p-6 rounded-3xl shadow-xl flex items-center gap-4">
+            <div className="w-6 h-6 border-4 border-secondary border-t-transparent rounded-full animate-spin" />
+            <span className="font-bold text-primary">Processing Order...</span>
+          </div>
+        </div>
+      )}
       <SuccessModal 
         isOpen={isOpen && step === 3} 
         onClose={handleCloseSuccess} 
