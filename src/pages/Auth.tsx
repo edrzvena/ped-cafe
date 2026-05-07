@@ -59,15 +59,10 @@ const Auth: React.FC = () => {
             >
               {view === 'login' && (
                 <div className="space-y-4">
-                  <LoginForm onToggle={() => setView('register')} />
-                  <div className="text-center">
-                    <button
-                      onClick={() => setView('forgot-password')}
-                      className="text-sm font-semibold text-primary/40 hover:text-orange-500 transition-colors"
-                    >
-                      Forgot Password?
-                    </button>
-                  </div>
+                  <LoginForm 
+                    onToggle={() => setView('register')} 
+                    onForgotPassword={() => setView('forgot-password')}
+                  />
                 </div>
               )}
               

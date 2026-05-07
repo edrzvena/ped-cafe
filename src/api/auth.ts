@@ -41,8 +41,8 @@ export const getProfile = async (id: string) => {
     .select('*')
     .eq('id', id)
     .single();
-  
-  if (error && error.code !== 'PGRST116') throw error; 
+
+  if (error && error.code !== 'PGRST116') throw error;
   return data;
 };
 
@@ -54,6 +54,13 @@ export const updateProfile = async (id: string, updates: { full_name: string, ph
       ...updates,
       updated_at: new Date().toISOString(),
     });
-  
+
+  if (error) throw error;
+};
+
+export const updatePassword = async (password: string) => {
+  const { error } = await supabase.auth.updateUser({
+    password: password
+  });
   if (error) throw error;
 };

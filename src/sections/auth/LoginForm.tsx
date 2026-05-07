@@ -4,7 +4,7 @@ import { Input } from '../../components/ui/Input';
 import { signIn } from '../../api/auth';
 import { useNavigate } from 'react-router-dom';
 
-export const LoginForm = ({ onToggle }: { onToggle: () => void }) => {
+export const LoginForm = ({ onToggle, onForgotPassword }: { onToggle: () => void, onForgotPassword: () => void }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -53,7 +53,11 @@ export const LoginForm = ({ onToggle }: { onToggle: () => void }) => {
         required
       />
       <div className="text-right">
-        <button type="button" className="text-sm text-orange-500 hover:underline">
+        <button 
+          type="button" 
+          onClick={onForgotPassword}
+          className="text-sm text-orange-500 hover:underline"
+        >
           Forgot Password?
         </button>
       </div>

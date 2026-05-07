@@ -6,6 +6,7 @@ import Cart from './pages/Cart';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Admin from './pages/Admin';
+import ResetPassword from './pages/ResetPassword';
 import { AnimatePresence } from 'framer-motion';
 import { CartProvider } from './lib/CartContext';
 import { AuthProvider } from './lib/AuthContext';
@@ -24,9 +25,10 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
           </Routes>
         </AnimatePresence>
-      </Router>
+        </Router>
       </CartProvider>
     </AuthProvider>
   );
