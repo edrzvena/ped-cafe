@@ -27,27 +27,38 @@ const OrderHistory: React.FC = () => {
         {orders.length === 0 ? (
           <p className="text-primary/40 text-sm">No orders yet.</p>
         ) : (
-          orders.map((order) => (
-            <Card key={order.id} className="p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-              <div>
-                <div className="flex items-center gap-3 mb-1">
-                  <span className="font-bold text-primary">#{order.id.slice(0, 8)}</span>
-                  <span className="text-xs text-primary/40">
-                    {new Date(order.created_at).toLocaleDateString('id-ID')}
-                  </span>
+          orders.map((order, index) => {
+            const personalOrderNumber = orders.length - index;
+            return (
+              <Card key={order.id} className="p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                  <div className="flex items-center gap-3 mb-1">
+                    <span className="font-bold text-primary">Order #{personalOrderNumber}</span>
+                    <span className="text-xs font-mono text-primary/30">
+                      (ID: {order.id.slice(0, 4).toUpperCase()})
+                    </span>
+                    <span className="text-xs text-primary/40">
+                      {new Date(order.created_at).toLocaleDateString('id-ID')}
+                    </span>
+                  </div>
+                  <p className="text-sm text-primary/60">
+                    {order.items?.filter((i: any) => i.name !== 'Note').map((i: any) => i.name).join(', ')}
+                  </p>
+                  {order.items?.find((i: any) => i.name === 'Note') && (
+                    <div className="mt-2 text-[10px] bg-secondary/10 text-secondary px-3 py-1 rounded-full font-bold inline-block">
+                      {order.items.find((i: any) => i.name === 'Note').description}
+                    </div>
+                  )}
                 </div>
-                <p className="text-sm text-primary/60">
-                  {order.items?.map((i: any) => i.name).join(', ')}
-                </p>
-              </div>
-              <div className="text-right flex flex-col items-end">
-                <p className="font-black text-primary mb-2">Rp {order.total_amount?.toLocaleString()}</p>
-                <Badge variant={order.status === 'completed' ? 'accent' : 'secondary'}>
-                  {order.status}
-                </Badge>
-              </div>
-            </Card>
-          ))
+                <div className="text-right flex flex-col items-end">
+                  <p className="font-black text-primary mb-2">Rp {order.total_amount?.toLocaleString()}</p>
+                  <Badge variant={order.status === 'completed' ? 'accent' : 'secondary'}>
+                    {order.status}
+                  </Badge>
+                </div>
+              </Card>
+            );
+          })
         )}
       </div>
     </div>

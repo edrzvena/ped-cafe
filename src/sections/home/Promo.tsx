@@ -2,26 +2,26 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
-import { Sparkles, Zap, Gift } from 'lucide-react';
+import { Sparkles, Gift, Coffee } from 'lucide-react';
 
 const Promo: React.FC = () => {
   const promos = [
     {
-      title: "Buy 1 Get 1 Free",
-      description: "Every Monday morning, enjoy double the joy with our signature blends.",
-      icon: <Gift className="w-8 h-8" />,
+      title: "Loyalty Program",
+      description: "Earn 1 point for every Rp 10.000 spent. Collect points automatically with every order through our web app.",
+      icon: <Sparkles className="w-8 h-8" />,
       color: "bg-secondary/20 text-secondary",
     },
     {
-      title: "Flash Sale 30% Off",
-      description: "Available from 2 PM to 4 PM. Perfect for your afternoon pick-me-up.",
-      icon: <Zap className="w-8 h-8" />,
+      title: "Free Coffee Reward",
+      description: "Redeem 500 points to get a free signature coffee of your choice. It's our way of saying thanks!",
+      icon: <Gift className="w-8 h-8" />,
       color: "bg-primary/10 text-primary",
     },
     {
-      title: "Points Double",
-      description: "Order via our web app and get 2x loyalty points for every purchase.",
-      icon: <Sparkles className="w-8 h-8" />,
+      title: "Dine In or Take Away",
+      description: "Enjoy your favorites anywhere. Whether you want to chill at our place or grab a quick bite to go.",
+      icon: <Coffee className="w-8 h-8" />,
       color: "bg-secondary/20 text-secondary",
     }
   ];

@@ -10,12 +10,12 @@ const Hero: React.FC = () => {
       {/* Decorative background elements */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-secondary/5 -skew-x-12 transform origin-top-right -z-10" />
       <motion.div
-        animate={{ 
+        animate={{
           y: [0, -20, 0],
           rotate: [0, 5, 0]
         }}
-        transition={{ 
-          duration: 10, 
+        transition={{
+          duration: 10,
           repeat: Infinity,
           ease: "easeInOut"
         }}
@@ -38,15 +38,16 @@ const Hero: React.FC = () => {
             </span>
             Premium Coffee Shop
           </div>
-          
+
           <h1 className="text-6xl md:text-8xl font-black leading-tight text-primary">
-            Wake Up to <br />
-            <span className="text-secondary italic">Perfect</span> Brew
+            Authentic <br />
+            <span className="text-secondary italic">Coffee</span> Vibes
           </h1>
-          
+
           <p className="text-xl text-primary/70 leading-relaxed max-w-lg">
-            Experience the art of coffee making with our hand-picked beans, 
-            expertly roasted to bring out the boldest flavors in every cup.
+            Experience the real taste of premium beans and local favorites.
+            From our signature lattes to our beloved Chicken Katsu,
+            we serve nothing but the best for your daily journey.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -82,13 +83,13 @@ const Hero: React.FC = () => {
           className="relative"
         >
           <div className="relative z-10 rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white">
-            <img 
-              src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80&w=800" 
-              alt="Premium Coffee" 
+            <img
+              src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80&w=800"
+              alt="Premium Coffee"
               className="w-full h-[600px] object-cover hover:scale-110 transition-transform duration-700"
             />
           </div>
-          
+
           {/* Floating Card */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
@@ -101,7 +102,7 @@ const Hero: React.FC = () => {
                 <Coffee className="text-secondary w-8 h-8" />
               </div>
               <div>
-                <p className="font-bold text-primary">Best Latte 2024</p>
+                <p className="font-bold text-primary">Best Latte 1950</p>
                 <p className="text-xs text-primary/50">Awarded by Coffee Weekly</p>
               </div>
             </div>

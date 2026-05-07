@@ -3,6 +3,26 @@ import { Coffee, Mail, Phone, MapPin, Globe, Share2, Heart } from 'lucide-react'
 import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
+  const [isLiked, setIsLiked] = React.useState(false);
+
+  const handleShare = async () => {
+    const shareUrl = 'https://ped-cafe-kappa.vercel.app';
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Ped's Cafe",
+          text: "Crafting the perfect coffee experience since 1945.",
+          url: shareUrl,
+        });
+      } catch (err) {
+        console.error('Error sharing:', err);
+      }
+    } else {
+      navigator.clipboard.writeText(shareUrl);
+      alert('Link copied to clipboard!');
+    }
+  };
+
   return (
     <footer className="bg-primary text-accent pt-20 pb-10 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
@@ -19,15 +39,31 @@ const Footer: React.FC = () => {
             Crafting the perfect coffee experience since 1945. Your daily dose of premium beans and cozy vibes.
           </p>
           <div className="flex gap-4">
-            <a href="#" className="p-2 bg-white/10 rounded-full hover:bg-secondary hover:text-primary transition-all duration-300">
+            <a 
+              href="https://www.google.com/maps/search/?api=1&query=Jl.+Kisamaun+No.14,+Kota+Tangerang" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 bg-white/10 rounded-full hover:bg-secondary hover:text-primary transition-all duration-300"
+              title="Visit our location"
+            >
               <Globe className="w-5 h-5" />
             </a>
-            <a href="#" className="p-2 bg-white/10 rounded-full hover:bg-secondary hover:text-primary transition-all duration-300">
+            <button 
+              onClick={handleShare}
+              className="p-2 bg-white/10 rounded-full hover:bg-secondary hover:text-primary transition-all duration-300"
+              title="Share Website"
+            >
               <Share2 className="w-5 h-5" />
-            </a>
-            <a href="#" className="p-2 bg-white/10 rounded-full hover:bg-secondary hover:text-primary transition-all duration-300">
-              <Heart className="w-5 h-5" />
-            </a>
+            </button>
+            <button 
+              onClick={() => setIsLiked(!isLiked)}
+              className={`p-2 rounded-full transition-all duration-300 ${
+                isLiked ? 'bg-red-500 text-white' : 'bg-white/10 hover:bg-red-500 hover:text-white'
+              }`}
+              title="Love us"
+            >
+              <Heart className={`w-5 h-5 ${isLiked ? 'fill-current' : ''}`} />
+            </button>
           </div>
         </div>
 
@@ -46,15 +82,15 @@ const Footer: React.FC = () => {
           <ul className="space-y-4 text-accent/60">
             <li className="flex items-center gap-3">
               <Phone className="w-5 h-5 text-secondary" />
-              <span>+62 812 3456 7890</span>
+              <span>+62 813 8443 7767</span>
             </li>
             <li className="flex items-center gap-3">
               <Mail className="w-5 h-5 text-secondary" />
-              <span>hello@peds-cafe.com</span>
+              <span>pedcafe@gmail.com</span>
             </li>
             <li className="flex items-center gap-3">
               <MapPin className="w-5 h-5 text-secondary" />
-              <span>123 Coffee Street, Jakarta</span>
+              <span>Jl. Kisamaun No.14, Kota Tangerang</span>
             </li>
           </ul>
         </div>
@@ -75,7 +111,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 text-center text-accent/40 text-sm">
-        &copy; 2024 Ped's Cafe. All rights reserved. Made with love for coffee lovers.
+        &copy; 1945 Ped's Cafe. All rights reserved. Made with love for coffee lovers.
       </div>
     </footer>
   );

@@ -7,13 +7,20 @@ import { getUserOrders } from '../../api/orders';
 
 const OrderStatus: React.FC = () => {
   const { user } = useAuth();
+  const [allOrdersCount, setAllOrdersCount] = useState(0);
   const [activeOrder, setActiveOrder] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user) {
       getUserOrders(user.id).then(data => {
+        setAllOrdersCount(data.length);
         const active = data.find(o => o.status === 'processing' || o.status === 'pending');
+        if (active) {
+          // Find the index of active order to determine its personal number
+          const index = data.findIndex(o => o.id === active.id);
+          active.personalNumber = data.length - index;
+        }
         setActiveOrder(active);
         setLoading(false);
       });
@@ -45,7 +52,12 @@ const OrderStatus: React.FC = () => {
           <Clock className="text-secondary w-8 h-8 animate-pulse" />
         </div>
         <div>
-          <p className="font-bold text-primary">#{activeOrder.id.slice(0, 8)}</p>
+          <div className="flex items-center gap-2">
+            <p className="font-bold text-primary text-lg">Order #{activeOrder.personalNumber}</p>
+            <span className="text-[10px] font-mono text-primary/30 mt-1">
+              (ID: {activeOrder.id.slice(0, 4).toUpperCase()})
+            </span>
+          </div>
           <p className="text-sm text-primary/50">Your order is being crafted</p>
         </div>
       </div>

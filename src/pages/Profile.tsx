@@ -8,13 +8,19 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../lib/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { LogOut } from 'lucide-react';
+import { getProfile } from '../api/auth';
 
 const Profile: React.FC = () => {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const [profileData, setProfileData] = React.useState<any>(null);
 
   React.useEffect(() => {
-    if (!user) navigate('/auth');
+    if (!user) {
+      navigate('/auth');
+    } else {
+      getProfile(user.id).then(setProfileData);
+    }
   }, [user, navigate]);
 
   const handleLogout = async () => {
@@ -23,6 +29,12 @@ const Profile: React.FC = () => {
   };
 
   if (!user) return null;
+
+  // Format Member ID sequentially if it exists, otherwise use a placeholder or part of UUID
+  const memberId = profileData?.member_number 
+    ? `PED-${String(profileData.member_number).padStart(4, '0')}`
+    : `PED-${user.id.substring(0, 4).toUpperCase()}`;
+
   return (
     <motion.main
       initial={{ opacity: 0 }}
@@ -47,7 +59,10 @@ const Profile: React.FC = () => {
           
           <div className="grid lg:grid-cols-3 gap-12 items-start">
             <div className="lg:col-span-1">
-              <MembershipCard />
+              <MembershipCard 
+                memberSince={user.created_at} 
+                memberId={memberId}
+              />
               <div className="mt-8 p-6 bg-white rounded-3xl border border-primary/5 space-y-4">
                 <h4 className="font-bold text-primary">Account Security</h4>
                 <p className="text-sm text-primary/40 leading-relaxed">
