@@ -7,14 +7,12 @@ import { getUserOrders } from '../../api/orders';
 
 const OrderStatus: React.FC = () => {
   const { user } = useAuth();
-  const [allOrdersCount, setAllOrdersCount] = useState(0);
   const [activeOrder, setActiveOrder] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user) {
       getUserOrders(user.id).then(data => {
-        setAllOrdersCount(data.length);
         const active = data.find(o => o.status === 'processing' || o.status === 'pending');
         if (active) {
           // Find the index of active order to determine its personal number
