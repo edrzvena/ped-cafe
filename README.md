@@ -1,75 +1,90 @@
-# React + TypeScript + Vite
+# ☕ Ped's Cafe - Premium Coffee & Food Ordering System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ped's Cafe is a modern, high-performance web application designed for a seamless coffee and food ordering experience. Built with a **Menu-First approach**, this platform prioritizes speed, aesthetics, and user conversion.
 
-Currently, two official plugins are available:
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Key Features
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- **Menu-First Experience:** Instant access to categories and best-selling products from the landing page.
+- **Transactional Flow:** Add items to cart and checkout in seconds.
+- **Loyalty Program:** Built-in point tracking (e.g., 500 points for 1 free coffee).
+- **Flexible Ordering:** Choose between "Dine In" or "Take Away".
+- **Real-time Updates:** Order status tracking integrated with Supabase.
+- **Admin Dashboard:** Full management of menu items, categories, and order history.
+- **Premium UI/UX:** Smooth animations with Framer Motion and a curated color palette.
 
-Note: This will impact Vite dev & build performances.
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend:** React.js + TypeScript
+- **Styling:** Tailwind CSS + Vanilla CSS
+- **State Management:** React Context API (Cart & Auth)
+- **Database & Auth:** Supabase
+- **Icons:** Lucide React
+- **Animations:** Framer Motion
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 📂 Project Structure
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+src/
+├── api/          # Supabase services (Menu, Orders, Auth)
+├── components/   # Reusable UI components (Buttons, Modals, Cards)
+├── lib/          # Context providers & Supabase client
+├── pages/        # Main route components (Home, Menu, Admin, Auth)
+├── sections/     # Modular page sections (Hero, FeaturedMenu, InfoBanner)
+└── types/        # TypeScript interfaces
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## ⚙️ Installation & Setup
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/your-username/cafe-ped.git
+   cd cafe-ped
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Environment Setup:**
+   Copy the `.env.example` file to `.env` and fill in your Supabase credentials:
+   ```bash
+   cp .env.example .env
+   ```
+
+4. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 🗄️ Database Setup (Supabase)
+
+To make the app functional, ensure your Supabase project has the following tables:
+- `products`: (id, name, description, price, category, image_url, isPopular, rating)
+- `orders`: (id, user_id, status, total_price, order_type, items)
+- `profiles`: (id, full_name, points, email)
+
+---
+
+## 📝 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+**Built with ❤️ for Ped's Cafe Community.**
