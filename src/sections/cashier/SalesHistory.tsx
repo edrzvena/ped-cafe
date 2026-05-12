@@ -227,7 +227,7 @@ const SalesHistory: React.FC<SalesHistoryProps> = ({ orders, loading }) => {
                 </tr>
               ) : (
                 <AnimatePresence>
-                  {filteredOrders.map((order, i) => {
+                  {filteredOrders.map((order) => {
                     const metadata = order.items?.find((item: any) => item.name === '_metadata') as any;
                     const customerName = metadata?.customer_name || order.profiles?.full_name || 'Guest';
                     const phone = metadata?.customer_phone || '-';

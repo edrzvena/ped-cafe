@@ -33,7 +33,6 @@ const POS: React.FC<POSProps> = ({ menu, loading, onOrderSuccess }) => {
   const [tableNumber, setTableNumber] = useState(() => localStorage.getItem('pos_table_number') || '');
   const [paymentMethod, setPaymentMethod] = useState<'cash' | 'card' | 'qris'>('cash');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
 
   // Update categories when menu changes
   useEffect(() => {
@@ -125,8 +124,6 @@ const POS: React.FC<POSProps> = ({ menu, loading, onOrderSuccess }) => {
       localStorage.removeItem('pos_customer_name');
       localStorage.removeItem('pos_customer_phone');
       localStorage.removeItem('pos_table_number');
-      setShowSuccess(true);
-      setTimeout(() => setShowSuccess(false), 3000);
     } catch (error) {
       console.error('Checkout error:', error);
       alert('Gagal membuat pesanan. Coba lagi bro!');

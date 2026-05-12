@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiGrid, FiCoffee, FiPieChart, FiSettings, FiLogOut, FiHome } from 'react-icons/fi';
+import { FiCoffee, FiPieChart, FiSettings, FiLogOut, FiHome } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 
 interface AdminSidebarProps {

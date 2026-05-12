@@ -1,10 +1,7 @@
 import React from 'react';
-import { Card } from '../../components/ui/Card';
-import { Badge } from '../../components/ui/Badge';
-import { Button } from '../../components/ui/Button';
 import type { Order, OrderStatus } from '../../types';
 import { motion } from 'framer-motion';
-import { FiClock, FiUser, FiPackage, FiMapPin, FiCreditCard, FiLoader } from 'react-icons/fi';
+import { FiClock, FiPackage, FiMapPin, FiCreditCard, FiLoader } from 'react-icons/fi';
 
 interface OrderCardProps {
   order: Order;
