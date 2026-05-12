@@ -17,7 +17,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const isCashier = user?.email === import.meta.env.VITE_CASHIER_EMAIL;
+  const isCashier = user?.email?.toLowerCase() === import.meta.env.VITE_CASHIER_EMAIL?.toLowerCase();
+
+  // Debugging (bisa lu liat di Inspect Element > Console)
+  useEffect(() => {
+    if (user) {
+      console.log('Current User:', user.email);
+      console.log('Target Cashier:', import.meta.env.VITE_CASHIER_EMAIL);
+      console.log('Is Cashier:', isCashier);
+    }
+  }, [user, isCashier]);
 
   useEffect(() => {
     // Check active sessions
