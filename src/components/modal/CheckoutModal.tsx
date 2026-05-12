@@ -45,10 +45,17 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
 
     setLoading(true);
     try {
-      // Masukin info meja/take-away ke dalam data pesanan
-      const orderItems = [...cart, { name: 'Note', description: `Mode: ${orderType} | Location: ${table} | Payment: ${_method}`, price: 0, quantity: 1 } as any];
+      const taxAmount = totalPrice * 0.1;
+      const data = await createOrder(
+        user.id, 
+        totalPrice + taxAmount, 
+        cart, 
+        orderType || 'dine-in', 
+        table.replace('Table #', ''), 
+        _method,
+        taxAmount
+      );
       
-      const data = await createOrder(user.id, totalPrice, orderItems);
       if (data && data[0]) {
         setOrderNumber(data[0].order_number);
       }

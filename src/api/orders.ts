@@ -11,32 +11,106 @@ export const getUserOrders = async (userId: string) => {
   return data;
 };
 
-export const createOrder = async (userId: string, total: number, items: any[]) => {
+export const createOrder = async (
+  userId: string, 
+  total: number, 
+  items: any[], 
+  orderType?: 'dine-in' | 'take-away',
+  tableNumber?: string,
+  paymentMethod?: string,
+  tax?: number,
+  additionalMetadata?: Record<string, any>
+) => {
+  const enrichedItems = [
+    ...items,
+    {
+      name: '_metadata',
+      order_type: orderType,
+      table_number: tableNumber,
+      payment_method: paymentMethod,
+      tax: tax,
+      is_hidden: true,
+      ...additionalMetadata
+    }
+  ];
+
+  console.log('Creating order for user:', userId, 'Total:', total);
+
   const { data, error } = await supabase
     .from('orders')
     .insert([{
       user_id: userId,
       total_amount: total,
-      items: items,
+      items: enrichedItems,
       status: 'processing'
     }])
     .select();
 
-  if (error) throw error;
+  if (error) {
+    console.error('Order creation error:', error);
+    throw error;
+  }
   
-  // Tambah poin (misal: tiap 10rb dapet 1 poin)
+  // Award points
   const earnedPoints = Math.floor(total / 10000);
   if (earnedPoints > 0) {
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('points')
-      .eq('id', userId)
-      .single();
+    try {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('points')
+        .eq('id', userId)
+        .single();
+      
+      await supabase
+        .from('profiles')
+        .update({ points: (profile?.points || 0) + earnedPoints })
+        .eq('id', userId);
+    } catch (e) {
+      console.warn('Point awarding failed, but order was created:', e);
+    }
+  }
+
+  return data;
+};
+
+export const getAllOrders = async () => {
+  const { data, error } = await supabase
+    .from('orders')
+    .select('*, profiles(full_name, email)')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching with join:', error);
+    const { data: simpleData, error: simpleError } = await supabase
+      .from('orders')
+      .select('*')
+      .order('created_at', { ascending: false });
     
-    await supabase
-      .from('profiles')
-      .update({ points: (profile?.points || 0) + earnedPoints })
-      .eq('id', userId);
+    if (simpleError) throw simpleError;
+    return simpleData;
+  }
+  
+  return data;
+};
+
+export const updateOrderStatus = async (orderId: string, status: string) => {
+  console.log('Updating order status:', orderId, 'to', status);
+  
+  const { data, error } = await supabase
+    .from('orders')
+    .update({ status })
+    .eq('id', orderId)
+    .select();
+
+  if (error) {
+    console.error('Update status error:', error);
+    throw error;
+  }
+
+  if (data && data.length === 0) {
+    console.warn('Update successful but NO rows were affected. Check if ID exists:', orderId);
+  } else {
+    console.log('Update success! Returned data:', data);
   }
 
   return data;

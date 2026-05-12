@@ -39,8 +39,20 @@ export const getMenuItems = async (): Promise<MenuItem[]> => {
     category: item.category,
     image: item.image_url || item.image, // Handle image_url dari supabase
     rating: item.rating || 5, // Default rating kalau di DB belum ada
-    isPopular: item.isPopular
+    isPopular: item.isPopular,
+    is_available: item.is_available ?? true // Default true kalau kolom belum ada
   }));
+};
+
+export const updateProductAvailability = async (id: string, is_available: boolean) => {
+  const { data, error } = await supabase
+    .from('products')
+    .update({ is_available })
+    .eq('id', id)
+    .select();
+
+  if (error) throw error;
+  return data;
 };
 
 export const addProduct = async (product: Omit<MenuItem, 'id' | 'rating'>) => {

@@ -26,7 +26,13 @@ export const LoginForm = ({ onToggle, onForgotPassword }: { onToggle: () => void
 
     try {
       await signIn(email, password);
-      navigate('/');
+      
+      // Redirect based on role
+      if (email === import.meta.env.VITE_CASHIER_EMAIL) {
+        navigate('/cashier');
+      } else {
+        navigate('/');
+      }
     } catch (error: any) {
       alert(error.message);
     } finally {
