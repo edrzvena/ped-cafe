@@ -140,7 +140,7 @@ const POS: React.FC<POSProps> = ({ menu, loading, onOrderSuccess }) => {
   );
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8 h-[calc(100vh-140px)] overflow-hidden">
+    <div className="flex flex-col lg:flex-row gap-8 lg:h-[calc(100vh-180px)] lg:overflow-hidden">
       {/* Left Column: Menu Selection */}
       <div className="flex-1 flex flex-col gap-6 min-h-0">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 flex-shrink-0">

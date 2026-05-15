@@ -26,13 +26,13 @@ const Hero: React.FC = () => {
               Now Serving: Freshly Brewed Joy
             </div>
 
-            <h1 className="text-6xl md:text-8xl font-black leading-[0.9] text-primary">
+            <h1 className="text-5xl md:text-8xl font-black leading-[0.9] text-primary">
               Ready for <br />
               <span className="text-secondary">Your Daily</span> <br />
               Caffeine?
             </h1>
 
-            <p className="text-lg md:text-xl text-primary/70 leading-relaxed max-w-lg">
+            <p className="text-base md:text-xl text-primary/70 leading-relaxed max-w-lg">
               Skip the line and order your favorites directly from your phone. 
               Freshly brewed, expertly crafted, and ready when you are.
             </p>
@@ -40,16 +40,16 @@ const Hero: React.FC = () => {
             {/* Transactional Search/CTA */}
             <div className="relative max-w-md group">
               <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none text-primary/30 group-focus-within:text-secondary transition-colors">
-                <Search size={20} />
+                <Search size={18} />
               </div>
               <input 
                 type="text" 
-                placeholder="Search your favorite coffee..."
-                className="w-full pl-12 pr-32 py-5 bg-white border-2 border-primary/10 rounded-2xl focus:outline-none focus:border-secondary shadow-xl shadow-primary/5 transition-all text-primary font-medium"
+                placeholder="Search coffee..."
+                className="w-full pl-10 pr-28 md:pr-32 py-4 md:py-5 bg-white border-2 border-primary/10 rounded-2xl focus:outline-none focus:border-secondary shadow-xl shadow-primary/5 transition-all text-primary font-medium text-sm md:text-base"
               />
-              <div className="absolute inset-y-2 right-2">
+              <div className="absolute inset-y-1.5 md:inset-y-2 right-1.5 md:right-2">
                 <Link to="/menu">
-                  <Button className="h-full px-6 rounded-xl shadow-lg shadow-primary/20">
+                  <Button className="h-full px-4 md:px-6 rounded-xl shadow-lg shadow-primary/20 text-xs md:text-sm">
                     Order Now
                   </Button>
                 </Link>

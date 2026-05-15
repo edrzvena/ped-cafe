@@ -69,11 +69,11 @@ const Admin: React.FC = () => {
     <div className="min-h-screen bg-[#FDFCFB] selection:bg-primary/10 overflow-x-hidden">
       <AdminSidebar activeTab={activeTab} setActiveTab={setActiveTab} onLogout={handleLogout} />
 
-      <main className="md:ml-24 p-6 md:p-12 max-w-[1600px] mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
+      <main className="ml-0 md:ml-24 p-6 md:p-12 pb-32 md:pb-12 max-w-[1600px] mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8 md:mb-12">
           <div>
-            <h1 className="text-5xl font-black text-primary tracking-tighter mb-2">Admin Center</h1>
-            <p className="text-primary/40 font-medium uppercase tracking-[0.2em] text-xs">Management & Insights</p>
+            <h1 className="text-4xl md:text-5xl font-black text-primary tracking-tighter mb-2">Admin Center</h1>
+            <p className="text-primary/40 font-medium uppercase tracking-[0.2em] text-[10px] md:text-xs">Management & Insights</p>
           </div>
         </div>
 

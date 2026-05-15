@@ -2,8 +2,8 @@ import React from 'react';
 import type { MenuItem } from '../../types';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
-import { Star, Plus } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Star, Plus, Minus } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../../lib/CartContext';
 import { useAuth } from '../../lib/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -13,9 +13,12 @@ interface MenuCardProps {
 }
 
 const MenuCard: React.FC<MenuCardProps> = ({ item }) => {
-  const { addToCart } = useCart();
+  const { cart, addToCart, updateQuantity } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
+
+  const cartItem = cart.find(i => i.id === item.id);
+  const quantity = cartItem?.quantity || 0;
 
   const handleAddToCart = () => {
     if (!user) {
@@ -24,6 +27,15 @@ const MenuCard: React.FC<MenuCardProps> = ({ item }) => {
       return;
     }
     addToCart(item);
+  };
+
+  const handleUpdateQuantity = (delta: number) => {
+    if (!user) {
+      alert('Login dulu yuk biar bisa pesen kopi favorit lo!');
+      navigate('/auth');
+      return;
+    }
+    updateQuantity(item.id, delta);
   };
 
   return (
@@ -66,17 +78,56 @@ const MenuCard: React.FC<MenuCardProps> = ({ item }) => {
             {item.category}
           </Badge>
 
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={handleAddToCart}
-            className="bg-primary text-accent p-2 rounded-xl shadow-lg shadow-primary/20 hover:bg-secondary hover:text-primary transition-colors"
-          >
-            <Plus className="w-5 h-5" />
-          </motion.button>
+          <div className="flex items-center gap-3">
+            <AnimatePresence mode="wait">
+              {quantity > 0 ? (
+                <motion.div 
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  className="flex items-center gap-3 bg-primary/5 p-1 rounded-xl"
+                >
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => handleUpdateQuantity(-1)}
+                    className="bg-white text-primary p-1.5 rounded-lg shadow-sm hover:bg-secondary hover:text-white transition-colors"
+                  >
+                    <Minus className="w-4 h-4" />
+                  </motion.button>
+                  
+                  <span className="text-sm font-bold text-primary min-w-[1.2rem] text-center">
+                    {quantity}
+                  </span>
+
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => handleUpdateQuantity(1)}
+                    className="bg-primary text-accent p-1.5 rounded-lg shadow-sm hover:bg-secondary hover:text-primary transition-colors"
+                  >
+                    <Plus className="w-4 h-4" />
+                  </motion.button>
+                </motion.div>
+              ) : (
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={handleAddToCart}
+                  className="bg-primary text-accent p-2 rounded-xl shadow-lg shadow-primary/20 hover:bg-secondary hover:text-primary transition-colors"
+                >
+                  <Plus className="w-5 h-5" />
+                </motion.button>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </Card>
+
   );
 };
 

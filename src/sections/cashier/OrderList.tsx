@@ -95,56 +95,59 @@ const OrderList: React.FC<OrderListProps> = ({ orders, loading, onRefresh, lastU
   return (
     <div className="space-y-8 pb-20">
       {/* Header & Stats Dashboard */}
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-6 md:gap-8">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h2 className="text-4xl font-black text-primary tracking-tight mb-1">Cashier Command Center</h2>
-            <p className="text-primary/40 font-medium">Monitoring real-time operasional cafe</p>
+            <h2 className="text-3xl md:text-4xl font-black text-primary tracking-tight mb-1">Command Center</h2>
+            <p className="text-primary/40 font-medium text-xs md:text-sm">Monitoring real-time operasional cafe</p>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="hidden lg:flex flex-col items-end mr-2">
-              <span className="text-[10px] font-bold text-primary/20 uppercase">Real-time Data</span>
-              <span className="text-[10px] font-bold text-green-500/60 uppercase">Last Sync: {lastUpdated}</span>
-            </div>
-            <div className="relative">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+            <div className="relative flex-1 sm:w-64">
               <input 
                 type="text" 
-                placeholder="Cari pesanan, meja, atau nama..."
-                className="pl-10 pr-4 py-2.5 bg-white/50 backdrop-blur-sm border border-primary/10 rounded-2xl text-sm focus:ring-2 focus:ring-primary/20 outline-none w-64 transition-all"
+                placeholder="Cari pesanan..."
+                className="pl-10 pr-4 py-2.5 bg-white/50 backdrop-blur-sm border border-primary/10 rounded-2xl text-sm focus:ring-2 focus:ring-primary/20 outline-none w-full transition-all"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
               <svg className="w-4 h-4 absolute left-3.5 top-3.5 text-primary/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </div>
-            <Button
-              variant="outline"
-              onClick={onRefresh}
-              className="gap-2 border-primary/10 bg-white/50 backdrop-blur-sm hover:bg-primary/5 rounded-2xl h-[42px]"
-              disabled={loading}
-            >
-              <FiRefreshCcw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-              Sync
-            </Button>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  onClick={onRefresh}
+                  className="flex-1 sm:flex-none gap-2 border-primary/10 bg-white/50 backdrop-blur-sm hover:bg-primary/5 rounded-2xl h-[42px]"
+                  disabled={loading}
+                >
+                  <FiRefreshCcw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+                  Sync
+                </Button>
+              </div>
+              <span className="text-[10px] font-bold text-green-500/60 uppercase text-right">
+                Sync: {lastUpdated}
+              </span>
+            </div>
           </div>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {[
-            { label: 'Penjualan Hari Ini', value: `Rp ${stats.totalSales.toLocaleString()}`, color: 'primary' },
-            { label: 'Pesanan Selesai', value: stats.completedCount, color: 'green-500' },
-            { label: 'Antrean Aktif', value: stats.activeCount, color: 'accent' },
-            { label: 'Rata-rata Struk', value: `Rp ${Math.round(stats.averageTicket).toLocaleString()}`, color: 'secondary' }
+            { label: 'Penjualan', value: `Rp ${stats.totalSales.toLocaleString()}`, color: 'primary' },
+            { label: 'Selesai', value: stats.completedCount, color: 'green-500' },
+            { label: 'Aktif', value: stats.activeCount, color: 'accent' },
+            { label: 'Avg Struk', value: `Rp ${Math.round(stats.averageTicket).toLocaleString()}`, color: 'secondary' }
           ].map((item, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="bg-white/80 backdrop-blur-md border border-primary/5 p-6 rounded-[2rem] shadow-sm flex flex-col gap-1"
+              className="bg-white/80 backdrop-blur-md border border-primary/5 p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] shadow-sm flex flex-col gap-1"
             >
-              <span className="text-[10px] font-bold uppercase tracking-widest text-primary/30">{item.label}</span>
-              <span className={`text-2xl font-black text-primary`}>{item.value}</span>
+              <span className="text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-primary/30">{item.label}</span>
+              <span className={`text-sm md:text-2xl font-black text-primary truncate`}>{item.value}</span>
             </motion.div>
           ))}
         </div>

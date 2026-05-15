@@ -93,7 +93,7 @@ const Cashier: React.FC = () => {
     <div className="min-h-screen bg-[#FDFCFB] selection:bg-primary/10 overflow-x-hidden">
       <CashierSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      <main className="md:ml-24 p-6 md:p-12 max-w-[1600px] mx-auto">
+      <main className="ml-0 md:ml-24 p-6 md:p-12 pb-32 md:pb-12 max-w-[1600px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

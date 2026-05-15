@@ -16,17 +16,17 @@ const Dashboard: React.FC = () => {
     >
       <Navbar />
       
-      <div className="pt-40 pb-20 px-6">
-        <div className="max-w-7xl mx-auto space-y-12">
-          <div className="flex justify-between items-end">
-            <div className="space-y-2">
-              <h1 className="text-5xl font-black text-primary">Dashboard</h1>
-              <p className="text-primary/50">Welcome back, Coffee Lover!</p>
+      <div className="pt-24 md:pt-40 pb-12 md:pb-20 px-6">
+        <div className="max-w-7xl mx-auto space-y-8 md:space-y-12">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+            <div className="space-y-1 md:space-y-2">
+              <h1 className="text-4xl md:text-5xl font-black text-primary">Dashboard</h1>
+              <p className="text-primary/50 text-sm md:text-base">Welcome back, Coffee Lover!</p>
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-1 space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-1 space-y-6 md:space-y-8">
               <PointsCard />
               <OrderStatus />
             </div>

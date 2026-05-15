@@ -18,12 +18,12 @@ const Cart: React.FC = () => {
       className="min-h-screen bg-background"
     >
       <Navbar />
-      
-      <div className="pt-40 pb-20 px-6">
+
+      <div className="pt-24 md:pt-40 pb-12 md:pb-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-5xl font-black text-primary mb-12">My Cart</h1>
-          
-          <div className="grid lg:grid-cols-3 gap-12">
+          <h1 className="text-4xl md:text-5xl font-black text-primary mb-8 md:mb-12">My Cart</h1>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12">
             <div className="lg:col-span-2">
               <CartList />
             </div>
@@ -33,9 +33,9 @@ const Cart: React.FC = () => {
           </div>
         </div>
       </div>
-      
-      <CheckoutModal 
-        isOpen={isCheckoutOpen} 
+
+      <CheckoutModal
+        isOpen={isCheckoutOpen}
         onClose={() => setIsCheckoutOpen(false)}
         onSuccess={clearCart}
       />

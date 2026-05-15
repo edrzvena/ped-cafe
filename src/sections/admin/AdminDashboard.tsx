@@ -16,22 +16,22 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ menuItems }) => {
   ];
 
   return (
-    <div className="space-y-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="space-y-6 md:space-y-10">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {stats.map((stat, idx) => (
           <motion.div
             key={stat.label}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
-            className="bg-white p-6 rounded-[2.5rem] border border-primary/5 shadow-xl shadow-primary/5 flex items-center gap-5"
+            className="bg-white p-4 md:p-6 rounded-[1.5rem] md:rounded-[2.5rem] border border-primary/5 shadow-xl shadow-primary/5 flex items-center gap-3 md:gap-5"
           >
-            <div className={`w-14 h-14 rounded-2xl ${stat.color} bg-opacity-10 flex items-center justify-center text-2xl text-${stat.color.split('-')[1]}-600`}>
+            <div className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl ${stat.color} bg-opacity-10 flex items-center justify-center text-xl md:text-2xl text-${stat.color.split('-')[1]}-600`}>
               {stat.icon}
             </div>
             <div>
-              <p className="text-xs font-black text-primary/30 uppercase tracking-widest">{stat.label}</p>
-              <p className="text-3xl font-black text-primary">{stat.value}</p>
+              <p className="text-[8px] md:text-xs font-black text-primary/30 uppercase tracking-widest">{stat.label}</p>
+              <p className="text-xl md:text-3xl font-black text-primary">{stat.value}</p>
             </div>
           </motion.div>
         ))}
