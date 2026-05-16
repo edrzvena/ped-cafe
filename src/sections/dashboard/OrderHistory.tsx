@@ -42,7 +42,7 @@ const OrderHistory: React.FC = () => {
                     </span>
                   </div>
                   <p className="text-sm text-primary/60">
-                    {order.items?.filter((i: any) => i.name !== 'Note').map((i: any) => i.name).join(', ')}
+                    {order.items?.filter((i: any) => i.name !== 'Note' && i.name !== '_metadata').map((i: any) => i.name).join(', ')}
                   </p>
                   {order.items?.find((i: any) => i.name === 'Note') && (
                     <div className="mt-2 text-[10px] bg-secondary/10 text-secondary px-3 py-1 rounded-full font-bold inline-block">
