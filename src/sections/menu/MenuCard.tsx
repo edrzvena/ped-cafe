@@ -5,8 +5,7 @@ import { Badge } from '../../components/ui/Badge';
 import { Star, Plus, Minus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../../lib/CartContext';
-import { useAuth } from '../../lib/AuthContext';
-import { useNavigate } from 'react-router-dom';
+
 
 interface MenuCardProps {
   item: MenuItem;
@@ -14,8 +13,7 @@ interface MenuCardProps {
 
 const MenuCard: React.FC<MenuCardProps> = ({ item }) => {
   const { cart, addToCart, updateQuantity } = useCart();
-  const { user } = useAuth();
-  const navigate = useNavigate();
+
 
   const cartItem = cart.find(i => i.id === item.id);
   const quantity = cartItem?.quantity || 0;
