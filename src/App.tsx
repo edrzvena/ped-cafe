@@ -12,12 +12,14 @@ import { AnimatePresence } from 'framer-motion';
 import { CartProvider } from './lib/CartContext';
 import { AuthProvider } from './lib/AuthContext';
 import FloatingCart from './components/common/FloatingCart';
+import ScrollToTop from './components/common/ScrollToTop';
 
 function App() {
   return (
     <AuthProvider>
       <CartProvider>
         <Router>
+          <ScrollToTop />
           <FloatingCart />
         <AnimatePresence mode="wait">
           <Routes>

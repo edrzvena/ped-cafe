@@ -58,7 +58,10 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onUpdateStatus, isUpdating
             </div>
             <div>
               <h4 className="font-black text-primary text-xl leading-tight">
-                {metadata?.customer_name || order.profiles?.full_name || 'Guest'}
+                {(() => {
+                  const profile = Array.isArray(order.profiles) ? order.profiles[0] : order.profiles;
+                  return metadata?.customer_name || profile?.full_name || profile?.email || 'Guest';
+                })()}
               </h4>
               <div className="flex items-center gap-2 mt-1">
                 <span className="text-[10px] font-bold text-primary/40 uppercase tracking-widest flex items-center gap-1">

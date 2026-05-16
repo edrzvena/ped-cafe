@@ -19,6 +19,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
   const [table, setTable] = useState('');
   const [orderNumber, setOrderNumber] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+  const [guestName, setGuestName] = useState('');
   const { user } = useAuth();
   const { cart, totalPrice } = useCart();
 
@@ -28,32 +29,40 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
       setStep(1); // Go to table selection
     } else {
       setTable('Take Away');
-      setStep(2); // Skip table, go to payment
+      if (!user) {
+        setStep(1); // For guests, we still need their name even for take-away
+      } else {
+        setStep(2); // Logged in, skip to payment
+      }
     }
   };
 
-  const handleTableSubmit = (num: string) => {
-    setTable(`Table #${num}`);
+  const handleTableSubmit = (num: string, name?: string) => {
+    if (orderType === 'dine-in') {
+      setTable(`Table #${num}`);
+    }
+    if (name) setGuestName(name);
     setStep(2);
   };
 
   const handlePaymentSelect = async (_method: string) => {
-    if (!user) {
-      alert('You must be logged in to order!');
-      return;
-    }
-
     setLoading(true);
     try {
       const taxAmount = totalPrice * 0.1;
+      // If no user, we might use a null ID or a placeholder. 
+      // Supabase usually requires a UUID for foreign keys, but if it's nullable, null works.
       const data = await createOrder(
-        user.id, 
+        user?.id || '00000000-0000-0000-0000-000000000000', // Placeholder UUID if NULL is not allowed
         totalPrice + taxAmount, 
         cart, 
         orderType || 'dine-in', 
         table.replace('Table #', ''), 
         _method,
-        taxAmount
+        taxAmount,
+        {
+          customer_name: user ? (user.user_metadata?.full_name || user.email) : guestName,
+          customer_phone: user?.user_metadata?.phone || ''
+        }
       );
       
       if (data && data[0]) {
@@ -84,6 +93,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
         isOpen={isOpen && step === 1} 
         onClose={() => setStep(0)} 
         onSubmit={handleTableSubmit} 
+        isGuest={!user}
       />
       <PaymentModal 
         isOpen={isOpen && step === 2} 

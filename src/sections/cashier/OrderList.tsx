@@ -57,11 +57,14 @@ const OrderList: React.FC<OrderListProps> = ({ orders, loading, onRefresh, lastU
 
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(order => 
-        order.id.toLowerCase().includes(query) ||
-        (order.profiles?.full_name || 'Guest').toLowerCase().includes(query) ||
-        order.table_number?.toLowerCase().includes(query)
-      );
+      filtered = filtered.filter(order => {
+        const profile = Array.isArray(order.profiles) ? order.profiles[0] : order.profiles;
+        const name = (order.items?.find((i: any) => i.name === '_metadata') as any)?.customer_name || profile?.full_name || profile?.email || 'Guest';
+        
+        return order.id.toLowerCase().includes(query) ||
+               name.toLowerCase().includes(query) ||
+               order.table_number?.toLowerCase().includes(query);
+      });
     }
 
     return filtered;
