@@ -21,20 +21,10 @@ const MenuCard: React.FC<MenuCardProps> = ({ item }) => {
   const quantity = cartItem?.quantity || 0;
 
   const handleAddToCart = () => {
-    if (!user) {
-      alert('Login dulu yuk biar bisa pesen kopi favorit lo!');
-      navigate('/auth');
-      return;
-    }
     addToCart(item);
   };
 
   const handleUpdateQuantity = (delta: number) => {
-    if (!user) {
-      alert('Login dulu yuk biar bisa pesen kopi favorit lo!');
-      navigate('/auth');
-      return;
-    }
     updateQuantity(item.id, delta);
   };
 
