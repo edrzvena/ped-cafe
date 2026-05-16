@@ -51,9 +51,9 @@ export const createOrder = async (
     throw error;
   }
   
-  // Award points
+  // Award points only for registered users
   const earnedPoints = Math.floor(total / 10000);
-  if (earnedPoints > 0) {
+  if (earnedPoints > 0 && userId) {
     try {
       const { data: profile } = await supabase
         .from('profiles')

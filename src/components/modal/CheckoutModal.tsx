@@ -52,7 +52,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, onSucces
       // If no user, we might use a null ID or a placeholder. 
       // Supabase usually requires a UUID for foreign keys, but if it's nullable, null works.
       const data = await createOrder(
-        user?.id || '00000000-0000-0000-0000-000000000000', // Placeholder UUID if NULL is not allowed
+        user?.id || null as any, 
         totalPrice + taxAmount, 
         cart, 
         orderType || 'dine-in', 
